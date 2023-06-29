@@ -3,8 +3,8 @@ import { Client, GatewayIntentBits, Events, Collection, REST, Routes, WebhookCli
 
 export default class Command extends Client {
     commands: Collection<string, Command> = new Collection();
-    logInfo: Function = () => {};
-    logError: Function = () => {};
+    logInfo: Function = (info: string = "Unknown info") => {};
+    logError: Function = (error: string = "Unknown error") => {};
     queue: Map<any, any> = new Map();
 
     constructor() {

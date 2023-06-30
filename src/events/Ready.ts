@@ -1,5 +1,5 @@
 const { Events } = require('discord.js')
-import CustomClient from "../structure/CustomClient"
+import CustomClient from "../classes/CustomClient"
 
 module.exports = {
     name: Events.ClientReady,

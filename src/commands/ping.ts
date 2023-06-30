@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, Client, EmbedBuilder } = require("discord.js")
-import CustomClient from "../structure/CustomClient"
+import CustomClient from "../classes/CustomClient"
 
 module.exports = ({
     data: new SlashCommandBuilder()

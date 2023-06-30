@@ -268,8 +268,23 @@ async function embedPages(client: CustomClient, interaction: any, array: Array<s
     return embed;
 }
 
+/**
+ * Generates a random cshort ode
+ * @returns Random UID
+ */
+function uuidv4() {
+    var dt = new Date().getTime();
+    var uuid = 'xx4x-yxxx-xxxx'.replace(/[xy]/g, function (c) {
+        var r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+}
+
 
 
 export default {
-    embedPages: embedPages
+    embedPages: embedPages,
+    uuid: uuidv4
 }

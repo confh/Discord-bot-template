@@ -10,7 +10,7 @@ export default class CustomClient extends Client {
     rest_commands: any[] = [];
     commands: Command[] = [];
     logInfo = (info: string = "Unknown info") => { };
-    logError = (error: string = "Unknown error", code: boolean = false) => { };
+    logError = (error: string = "Unknown error", advanced?: { enabled: boolean, id: string }) => { };
     config: {
         owners: string[],
         token: string,

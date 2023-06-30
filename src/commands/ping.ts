@@ -7,6 +7,7 @@ module.exports = new Command({
         .setName("ping")
         .setDescription("Shows the ping of the bot."),
     async execute(interaction: any, client: CustomClient) {
+        throw new Error("test error");
         const date = interaction.createdTimestamp
         const message = await interaction.channel.send("Calculating latency")
         await message.delete()

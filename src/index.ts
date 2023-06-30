@@ -1,6 +1,7 @@
 import CustomClient from "./classes/CustomClient"
 
 import { WebhookClient, EmbedBuilder } from 'discord.js'
+import functions from "./functions"
 const logger = require("./logger")
 const client = new CustomClient()
 const fs = require('node:fs');
@@ -17,7 +18,7 @@ client.config2 = {
 }
 
 
-client.logError = function (error: string = "Unknown error", code: boolean = false) {
+client.logError = function (error: string = "Unknown error", advanced?: { enabled: boolean, id: string }) {
     logger.error(error)
     if (!client.user) return;
     const embed = new EmbedBuilder()
@@ -25,7 +26,7 @@ client.logError = function (error: string = "Unknown error", code: boolean = fal
         .setFooter({ text: (client.user?.username as string), iconURL: client.user?.avatarURL({ size: 1024 }) as string })
         .setTitle(`${client.user?.username} Error logs`)
         .setTimestamp()
-        .setDescription(`[ERROR] ${error}`)
+        .setDescription(`${advanced?.enabled ? `Code: **${advanced.id}**` : ""}\`\`\`${error}\`\`\``)
     errorswebhook.send({
         username: `${client.user?.username} Error logs`,
         avatarURL: client.user?.avatarURL({ size: 1024 }) as string,

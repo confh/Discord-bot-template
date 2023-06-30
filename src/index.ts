@@ -9,12 +9,12 @@ const path = require('node:path');
 client.config = require("./config.json")
 const infowebhook = new WebhookClient({ url: client.config.infowebhookurl })
 const errorswebhook = new WebhookClient({ url: client.config.errorswebhookURL })
-
-client.commands = []
 const token = client.config.token;
 
 
-client.deployCommands(token)
+client.config2 = {
+    colors: { success: '#57F287', error: '#ED4245', normal: "#313338" }
+}
 
 
 client.logError = function (error: string = "Unknown error", code: boolean = false) {
@@ -49,6 +49,9 @@ client.logInfo = function (info: string = "Unknown info") {
 }
 
 client.login(token)
+
+client.deployCommands(token)
+client.deployWebPage()
 
 const pathToEvents = path.join(__dirname, "events")
 const files = fs.readdirSync(pathToEvents)

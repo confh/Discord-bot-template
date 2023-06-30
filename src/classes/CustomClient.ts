@@ -1,8 +1,10 @@
 
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js'
+import { Client, ColorResolvable, GatewayIntentBits, REST, Routes } from 'discord.js'
+const express = require("express")
 import Command from './Command';
 const fs = require('node:fs');
 const path = require('node:path');
+const app = express()
 
 export default class CustomClient extends Client {
     rest_commands: any[] = [];
@@ -14,7 +16,14 @@ export default class CustomClient extends Client {
         token: string,
         clientid: string,
         errorswebhookURL: string,
-        infowebhookurl: string
+        infowebhookurl: string,
+    };
+    config2: {
+        colors: {
+            success: ColorResolvable,
+            error: ColorResolvable,
+            normal: ColorResolvable
+        }
     }
 
     constructor() {
@@ -23,22 +32,22 @@ export default class CustomClient extends Client {
         });
     }
 
-
+    /**
+     * Register commands
+     * @param token - Secret token of the bot 
+     */
     async deployCommands(token: string) {
         const commandsPath = path.join(__dirname.split("\\").slice(0, __dirname.split("\\").length - 1).join("\\"), 'commands');
         const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.ts'));
 
         for (const file of commandFiles) {
-            const commandFiles = fs.readdirSync(commandsPath).filter((file: string) => file.endsWith('.ts'));
-            for (const file of commandFiles) {
-                const filePath = path.join(commandsPath, file);
-                const command = require(filePath) as Command;
-                if ('data' in command && 'execute' in command) {
-                    this.rest_commands.push(command.data.toJSON());
-                    this.commands.push(command)
-                } else {
-                    this.logInfo(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-                }
+            const filePath = path.join(commandsPath, file);
+            const command = require(filePath) as Command;
+            if ('data' in command && 'execute' in command) {
+                this.rest_commands.push(command.data.toJSON());
+                this.commands.push(command)
+            } else {
+                this.logInfo(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
             }
         }
         const rest = new REST().setToken(token);
@@ -54,5 +63,16 @@ export default class CustomClient extends Client {
         } catch (error) {
             this.logError(error as string);
         }
+    }
+
+    /**
+     * Deploys webservice so if you want to ping it every 5 minutes to make the bot online 24/7
+     */
+    async deployWebPage() {
+        app.get("/", (req: any, res: any) => {
+            res.send(`${this.user?.username} is online`)
+        })
+        this.logInfo("Successfully loaded webpage")
+        app.listen(process.env.PORT || 3000)
     }
 }

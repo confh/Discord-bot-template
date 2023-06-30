@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, Client, EmbedBuilder } = require("discord.js")
+import Command from "../classes/Command"
 import CustomClient from "../classes/CustomClient"
 
-module.exports = ({
+module.exports = new Command({
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Shows the ping of the bot."),

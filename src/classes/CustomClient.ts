@@ -2,8 +2,8 @@
 import { Client, ColorResolvable, GatewayIntentBits, REST, Routes } from 'discord.js'
 const express = require("express")
 import Command from './Command';
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 const app = express()
 
 export default class CustomClient extends Client {
@@ -15,8 +15,8 @@ export default class CustomClient extends Client {
         owners: string[],
         token: string,
         clientid: string,
-        errorswebhookURL: string,
-        infowebhookurl: string,
+        webhook: string,
+        webhookEnabled: boolean
     };
     config2: {
         colors: {
@@ -28,7 +28,7 @@ export default class CustomClient extends Client {
 
     constructor() {
         super({
-            intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
+            intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages]
         });
     }
 

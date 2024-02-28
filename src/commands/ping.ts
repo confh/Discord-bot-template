@@ -1,6 +1,5 @@
-const { SlashCommandBuilder, Client, EmbedBuilder } = require("discord.js")
+import { SlashCommandBuilder, EmbedBuilder } from "discord.js"
 import Command from "../classes/Command"
-import CustomClient from "../classes/CustomClient"
 
 module.exports = new Command({
     data: new SlashCommandBuilder()
@@ -13,7 +12,7 @@ module.exports = new Command({
         const embed = new EmbedBuilder()
             .setTimestamp()
             .setTitle("🏓 Pong!")
-            .setFooter({ text: `${client.user?.username}`, iconURL: client.user?.avatarURL({ size: 1024 }) })
+            .setFooter({ text: `${client.user?.username}`, iconURL: client.user?.avatarURL({ size: 1024 }) as string })
             .setDescription(`Latency: \`${Math.abs(message.createdTimestamp - date)}ms\`\nAPI Latency: \`${client.ws?.ping}ms\``)
             .setColor(client.config2.colors.normal)
 

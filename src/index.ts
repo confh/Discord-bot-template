@@ -1,15 +1,16 @@
 import CustomClient from "./classes/CustomClient"
 
 import { WebhookClient, EmbedBuilder } from 'discord.js'
-import functions from "./functions"
 const logger = require("./logger")
 const client = new CustomClient()
 const fs = require('node:fs');
 const path = require('node:path');
 
 client.config = require("./config.json")
-const infowebhook = new WebhookClient({ url: client.config.infowebhookurl })
-const errorswebhook = new WebhookClient({ url: client.config.errorswebhookURL })
+let webhook: WebhookClient | null = null
+if (client.config.webhookEnabled) {
+    webhook = new WebhookClient({ url: client.config.webhook })
+}
 const token = client.config.token;
 
 
@@ -22,12 +23,12 @@ client.logError = function (error: string = "Unknown error", advanced?: { enable
     logger.error(error)
     if (!client.user) return;
     const embed = new EmbedBuilder()
-        .setColor('#ED4245')
+        .setColor(client.config2.colors.error)
         .setFooter({ text: (client.user?.username as string), iconURL: client.user?.avatarURL({ size: 1024 }) as string })
         .setTitle(`${client.user?.username} Error logs`)
         .setTimestamp()
         .setDescription(`${advanced?.enabled ? `Code: **${advanced.id}**` : ""}\`\`\`${error}\`\`\``)
-    errorswebhook.send({
+    if (webhook != null) webhook.send({
         username: `${client.user?.username} Error logs`,
         avatarURL: client.user?.avatarURL({ size: 1024 }) as string,
         embeds: [embed]
@@ -37,12 +38,12 @@ client.logInfo = function (info: string = "Unknown info") {
     logger.info(info)
     if (!client.user) return;
     const embed = new EmbedBuilder()
-        .setColor("#313338")
+        .setColor(client.config2.colors.normal)
         .setFooter({ iconURL: client.user?.avatarURL({ size: 1024 }) as string, text: client.user?.username as string })
         .setTitle(`${client.user?.username} Info logs`)
         .setTimestamp()
         .setDescription(`[INFO] ${info}`)
-    infowebhook.send({
+    if (webhook != null) webhook.send({
         username: `${client.user?.username} Info logs`,
         avatarURL: client.user?.avatarURL({ size: 1024 }) as string,
         embeds: [embed]

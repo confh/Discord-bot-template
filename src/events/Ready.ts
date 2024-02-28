@@ -7,9 +7,9 @@ module.exports = {
     async execute(client: CustomClient) {
         client.logInfo("Client loaded.")
         client.logInfo("Starting to fetch members...")
-        await client.guilds.cache.forEach(async guild => {
-            await guild.members.fetch()
-        })
+        for (let i = 0; i < client.guilds.cache.size; i++) {
+            await client.guilds.cache.at(i)?.members.fetch()
+        }
         client.logInfo("Finished fetcing members.")
     }
 }

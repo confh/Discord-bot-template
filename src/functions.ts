@@ -256,10 +256,11 @@ async function embedPages(client: CustomClient, interaction: any, array: Array<s
     })
 
     collector.on('end', async (_: any, reason: any) => {
-        await row.components.forEach((component: any) => {
+        for (let i = 0; i < row.components.length; i++) {
+            const component = row.components[i] as any;
             component.setDisabled(true)
             component.setStyle(ButtonStyle.Secondary)
-        })
+        }
         await interaction.editReply({
             components: [row]
         });

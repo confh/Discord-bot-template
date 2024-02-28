@@ -58,7 +58,8 @@ client.deployWebPage()
 const pathToEvents = path.join(__dirname, "events")
 const files = fs.readdirSync(pathToEvents)
 
-files.forEach((file: string) => {
+for (let i = 0; i < files.length; i++) {
+    const file = files[i] as string;
     const filePath = path.join(pathToEvents, file);
     const event = require(filePath)
     if (event.once) {
@@ -66,5 +67,5 @@ files.forEach((file: string) => {
     } else {
         client.on(event.name, async (...args) => event.execute(...args, client))
     }
-})
+}
 

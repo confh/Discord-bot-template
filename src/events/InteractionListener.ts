@@ -1,4 +1,4 @@
-const { Events } = require("discord.js")
+import { Events, CommandInteraction } from "discord.js";
 import { EmbedBuilder } from "discord.js";
 import CustomClient from "../classes/CustomClient"
 import functions from "../functions";
@@ -6,12 +6,16 @@ import functions from "../functions";
 module.exports = {
     name: Events.InteractionCreate,
     once: false,
-    async execute(interaction: any, client: CustomClient) {
+    async execute(interaction: CommandInteraction, client: CustomClient) {
         if (!interaction.isChatInputCommand()) return;
         const cmd = client.commands.find(a => a.data.toJSON().name === interaction.commandName)
 
         if (!cmd) {
             client.logError(`Unknown command "${interaction.commandName}"`)
+        }
+
+        if(cmd?.owneronly && !client.config.owners.includes(interaction.user.id)){
+            return interaction.reply({ content: "This command can only be used by the owner.", ephemeral: true })
         }
 
         try {

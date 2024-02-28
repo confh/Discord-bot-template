@@ -7,8 +7,8 @@ module.exports = new Command({
         .setDescription("Shows the ping of the bot."),
     async execute(interaction, client) {
         const date = interaction.createdTimestamp
-        const message = await interaction.channel.send("Calculating latency")
-        await message.delete()
+        const message = await interaction.channel!!.send("Calculating latency")
+        message.delete()
         const embed = new EmbedBuilder()
             .setTimestamp()
             .setTitle("🏓 Pong!")

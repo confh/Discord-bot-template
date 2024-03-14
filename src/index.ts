@@ -1,10 +1,10 @@
 import CustomClient from "./classes/CustomClient"
 
 import { WebhookClient, EmbedBuilder } from 'discord.js'
-const logger = require("./logger")
+import logger from "./logger";
 const client = new CustomClient()
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
 client.config = require("./config.json")
 let webhook: WebhookClient | null = null
@@ -13,11 +13,9 @@ if (client.config.webhookEnabled) {
 }
 const token = client.config.token;
 
-
 client.config2 = {
     colors: { success: '#57F287', error: '#ED4245', normal: "#313338" }
 }
-
 
 client.logError = function (error: string = "Unknown error", advanced?: { enabled: boolean, id: string }) {
     logger.error(error)

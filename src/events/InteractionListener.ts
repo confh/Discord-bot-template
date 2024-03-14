@@ -1,7 +1,7 @@
 import { Events, CommandInteraction } from "discord.js";
 import { EmbedBuilder } from "discord.js";
 import CustomClient from "../classes/CustomClient"
-import functions from "../functions";
+import functions from "../Utils";
 
 module.exports = {
     name: Events.InteractionCreate,

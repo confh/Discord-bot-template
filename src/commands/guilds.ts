@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js"
 import Command from "../classes/Command"
-import functions from "../functions"
+import functions from "../Utils"
 
 module.exports = new Command({
     data: new SlashCommandBuilder()

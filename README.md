@@ -1,25 +1,15 @@
-# Discord bot template
-<h3>Discord bot template made using TypeScript and contains slash commands</h3>
+# Discord Bot Template (TypeScript)
 
-First thing install the dependencies using 
-```bash
-yarn install
-```
-or
-```bash
-node install
-```
-<br>
+This is a simple Discord bot template written entirely in TypeScript.
 
-And then change the "src/config.json" file
+## Installation
 
-<br>
+1. Install dependencies using `npm install`.
+2. Change the `src/config.json` file to include your Discord bot token and other configuration options.
+3. Run the bot using `npm run start`.
 
-And finally run the bot
-```bash
-yarn run start
-```
-or
-```bash
-node run start
-```
+## Commands
+
+The bot currently supports the following commands:
+
+* `/ping`: Responds with the current time.

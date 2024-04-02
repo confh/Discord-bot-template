@@ -10,6 +10,7 @@ This is a simple Discord bot template written entirely in TypeScript.
 
 ## Commands
 
-The bot currently supports the following commands:
+The bot currently has the following commands:
 
 * `/ping`: Responds with the current time.
+* `/guilds` (owner only): Shows all the guilds that the bot is in.

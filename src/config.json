@@ -5,5 +5,5 @@
     "token": "BOT_TOKEN",
     "clientid": "BOT_ID",
     "webhook": "webhookURL",
-    "webhookEnabled": true
+    "webhookEnabled": false
 }
